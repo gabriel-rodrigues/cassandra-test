@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cassandra.Mapping;
 using Core.CassandraConfig;
@@ -10,22 +11,21 @@ namespace Core.Repository
 {
     public class Repository : IRepository
     {
-        private readonly CassandraSessionCache _cassandra;
-		private Mapper _mapper;
+        private readonly Mapper _mapper;
 
         public Repository()
         {
-            _cassandra  = new CassandraSessionCache();
-			var session = _cassandra.GetSession(this.KeySpace);
+            var cassandra = new CassandraSessionCache();
+			var session = cassandra.GetSession(this.KeySpace);
 			_mapper     = new Mapper(session, MappingConfiguration.Global.Define<EmpregadoMap>());
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             await _mapper.DeleteAsync<Empregado>("WHERE emp_id = ?", id);
         }
 
-        public async Task<Empregado> GetAsync(int id)
+        public async Task<Empregado> GetAsync(Guid id)
         {
            return await _mapper.FirstOrDefaultAsync<Empregado>("WHERE emp_id = ? ", id);
         }

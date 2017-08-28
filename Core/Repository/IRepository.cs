@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Domain;
 
@@ -6,8 +7,8 @@ namespace Core.Repository
 {
     public interface IRepository
     {
-        Task DeleteAsync(int id);
-        Task<Empregado> GetAsync(int id);
+        Task DeleteAsync(Guid id);
+        Task<Empregado> GetAsync(Guid id);
         void AddAsync(Empregado empregado);
         ICollection<Empregado> GetAll();
         

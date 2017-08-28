@@ -1,5 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
 using AutoMapper;
 using Core.Domain;
 using Core.Repository;
@@ -27,7 +30,7 @@ namespace WebApplication.Controllers
         {
             var empregados = _mapper.Map<ICollection<EmpregadoViewModel>>(_repository.GetAll());
 
-            return new OkObjectResult(empregados);
+            return Ok(empregados);
         }
         
 
